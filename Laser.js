@@ -1,8 +1,10 @@
-function Laser(spos, angle) {
+function Laser(spos, angle, owner) {
     this.position = createVector(spos.x, spos.y);
     this.vel = p5.Vector.fromAngle(angle);
     this.vel.mult(10);
     this.acceleration = createVector ( 0, 0 ); 
+    this.damage = 10; 
+    this.owner = owner
     
     this.update = function() {
       this.position.add(this.vel);

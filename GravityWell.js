@@ -1,20 +1,29 @@
 class GravityWell {
     constructor (settings) {
         this.massObjects = []; 
-        this.forceOfGravity = 0.05; 
+        this.forceOfGravity = 0.2; 
         this.position = settings.position; 
         this.radius = settings.radius; 
         this.GravityRadius = settings.gravityRadius;
+        this.eventHorizonRadius = 20; 
     }
 
     addGravity () {
-        this.massObjects.forEach(massObject => {
+        this.massObjects.forEach( massObject => {
             if(dist(this.position.x, this.position.y, massObject.position.x, massObject.position.y) < this.GravityRadius / 2) {
                 let distanceVector = p5.Vector.sub(this.position, massObject.position); 
                 let direction = distanceVector.normalize();
                 massObject.addForce(direction.mult(this.forceOfGravity));  
             } 
         })
+    }
+
+    checkShipProximity () {
+        this.massObjects.forEach(massObject => {
+            if(dist (this.position.x, this.position.y, massObject.position.x, massObject.position.y) < this.eventHorizonRadius) {
+                gameManager.resetGame() 
+            }
+        }) 
     }
 
     draw() {
